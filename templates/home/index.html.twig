@@ -1,0 +1,877 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}The Pet Pantry - Your Partner in Pet Care Excellence{% endblock %}
+
+{% block stylesheets %}
+<style>
+    /* Hero Section */
+    .hero-section {
+        background: linear-gradient(135deg, rgba(243, 229, 171, 0.9), rgba(237, 201, 175, 0.9)), 
+                    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><pattern id="pawprints" patternUnits="userSpaceOnUse" width="200" height="200"><circle cx="50" cy="50" r="8" fill="%23F5DEB3" opacity="0.1"/><circle cx="150" cy="150" r="6" fill="%23D2B48C" opacity="0.1"/><circle cx="100" cy="120" r="7" fill="%23DEB887" opacity="0.1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23pawprints)"/></svg>');
+        background-size: cover;
+        background-position: center;
+        min-height: 90vh;
+        display: flex;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 30% 40%, rgba(255, 248, 225, 0.3) 0%, transparent 50%),
+                    radial-gradient(circle at 70% 80%, rgba(240, 230, 140, 0.2) 0%, transparent 50%);
+        animation: float 8s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0px) scale(1); }
+        50% { transform: translateY(-20px) scale(1.05); }
+    }
+
+    .hero-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero-content h1 {
+        font-size: 3.5rem;
+        font-weight: 700;
+        color: #3E2723;
+        margin-bottom: 20px;
+        line-height: 1.2;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .hero-content .highlight {
+        color: #8D6E63;
+        position: relative;
+    }
+
+    .hero-content .highlight::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 100%;
+        height: 8px;
+        background: linear-gradient(90deg, #F5DEB3, #FFE0B2);
+        border-radius: 4px;
+        opacity: 0.7;
+    }
+
+    .hero-content p {
+        font-size: 1.3rem;
+        color: #4E342E;
+        margin-bottom: 30px;
+        line-height: 1.6;
+    }
+
+    .hero-buttons {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        padding: 15px 30px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        position: relative;
+        overflow: hidden;
+        border: none;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .btn-primary {
+        background: linear-gradient(45deg, #8D6E63, #6D4C41);
+        color: #FFF8E1;
+        box-shadow: 0 8px 25px rgba(109, 76, 65, 0.3);
+    }
+
+    .btn-primary:hover {
+        background: linear-gradient(45deg, #A1887F, #8D6E63);
+        transform: translateY(-3px);
+        box-shadow: 0 12px 35px rgba(109, 76, 65, 0.4);
+    }
+
+    .btn-secondary {
+        background: rgba(255, 248, 225, 0.8);
+        color: #4E342E;
+        border: 2px solid #D2B48C;
+        backdrop-filter: blur(10px);
+    }
+
+    .btn-secondary:hover {
+        background: linear-gradient(45deg, #FFE0B2, #FFCC80);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(210, 180, 140, 0.3);
+    }
+
+    .hero-image {
+        position: relative;
+        text-align: center;
+    }
+
+    .hero-pet-image {
+        width: 100%;
+        max-width: 500px;
+        height: 400px;
+        background: linear-gradient(135deg, #FFE0B2, #F5DEB3);
+        border-radius: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 8rem;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        position: relative;
+        overflow: hidden;
+        animation: petFloat 6s ease-in-out infinite;
+    }
+
+    @keyframes petFloat {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        33% { transform: translateY(-10px) rotate(1deg); }
+        66% { transform: translateY(5px) rotate(-1deg); }
+    }
+
+    .hero-pet-image::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 248, 225, 0.4), transparent);
+        animation: shimmer 3s infinite;
+    }
+
+    @keyframes shimmer {
+        0% { left: -100%; }
+        100% { left: 100%; }
+    }
+
+    /* Features Section */
+    .features-section {
+        padding: 80px 0;
+        background: rgba(255, 248, 225, 0.5);
+    }
+
+    .features-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .section-title {
+        text-align: center;
+        font-size: 2.8rem;
+        font-weight: 700;
+        color: #3E2723;
+        margin-bottom: 20px;
+    }
+
+    .section-subtitle {
+        text-align: center;
+        font-size: 1.2rem;
+        color: #5D4037;
+        margin-bottom: 60px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 40px;
+        margin-top: 60px;
+    }
+
+    .feature-card {
+        background: rgba(255, 248, 225, 0.8);
+        backdrop-filter: blur(10px);
+        padding: 40px 30px;
+        border-radius: 25px;
+        text-align: center;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        border: 2px solid rgba(237, 201, 175, 0.3);
+        transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .feature-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(240, 230, 140, 0.2), transparent);
+        transition: left 0.6s;
+    }
+
+    .feature-card:hover::before {
+        left: 100%;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        background: rgba(255, 248, 225, 0.95);
+    }
+
+    .feature-icon {
+        font-size: 4rem;
+        margin-bottom: 20px;
+        display: block;
+        animation: bounce 2s infinite;
+    }
+
+    .feature-card:nth-child(2) .feature-icon { animation-delay: 0.2s; }
+    .feature-card:nth-child(3) .feature-icon { animation-delay: 0.4s; }
+    .feature-card:nth-child(4) .feature-icon { animation-delay: 0.6s; }
+
+    @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+        40% { transform: translateY(-10px); }
+        60% { transform: translateY(-5px); }
+    }
+
+    .feature-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #4E342E;
+        margin-bottom: 15px;
+    }
+
+    .feature-description {
+        color: #5D4037;
+        line-height: 1.6;
+    }
+
+    /* CTA Section */
+    .cta-section {
+        background: linear-gradient(135deg, #8D6E63, #6D4C41);
+        padding: 80px 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .cta-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="%23FFF8E1" opacity="0.1"/><circle cx="80" cy="40" r="1.5" fill="%23F5DEB3" opacity="0.1"/><circle cx="40" cy="80" r="2.5" fill="%23FFE0B2" opacity="0.1"/></svg>');
+        animation: twinkle 4s linear infinite;
+    }
+
+    @keyframes twinkle {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+    }
+
+    .cta-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 20px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .cta-title {
+        font-size: 3rem;
+        font-weight: 700;
+        color: #FFF8E1;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .cta-subtitle {
+        font-size: 1.3rem;
+        color: #F5DEB3;
+        margin-bottom: 40px;
+        opacity: 0.9;
+    }
+
+    .cta-button {
+        background: linear-gradient(45deg, #FFE0B2, #F5DEB3);
+        color: #4E342E;
+        font-size: 1.2rem;
+        padding: 18px 40px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 700;
+        box-shadow: 0 10px 30px rgba(255, 224, 178, 0.3);
+        transition: all 0.3s ease;
+        display: inline-block;
+    }
+
+    .cta-button:hover {
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 15px 40px rgba(255, 224, 178, 0.4);
+        background: linear-gradient(45deg, #FFCC80, #FFE0B2);
+    }
+
+    /* Stats Section */
+    .stats-section {
+        padding: 80px 0;
+        background: rgba(245, 222, 179, 0.3);
+    }
+
+    .stats-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 40px;
+        text-align: center;
+    }
+
+    .stat-item {
+        background: rgba(255, 248, 225, 0.8);
+        padding: 40px 20px;
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+    }
+
+    .stat-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    }
+
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 700;
+        color: #6D4C41;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .stat-label {
+        color: #5D4037;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.9rem;
+    }
+
+    /* Footer Section */
+    .footer {
+        background: linear-gradient(135deg, #3E2723, #4E342E);
+        color: #FFF8E1;
+        padding: 60px 0 30px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .footer::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #D2B48C, #F5DEB3, #FFE0B2, #D2B48C);
+    }
+
+    .footer-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 40px;
+    }
+
+    .footer-section h3 {
+        color: #F5DEB3;
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+        position: relative;
+    }
+
+    .footer-section h3::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 40px;
+        height: 2px;
+        background: linear-gradient(90deg, #FFE0B2, #F5DEB3);
+        border-radius: 2px;
+    }
+
+    .footer-section p {
+        color: #E8D5B7;
+        line-height: 1.6;
+        margin-bottom: 15px;
+    }
+
+    .footer-links {
+        list-style: none;
+        padding: 0;
+    }
+
+    .footer-links li {
+        margin-bottom: 12px;
+    }
+
+    .footer-links a {
+        color: #E8D5B7;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        position: relative;
+        display: inline-block;
+    }
+
+    .footer-links a::before {
+        content: '🐾';
+        opacity: 0;
+        margin-right: 8px;
+        transition: opacity 0.3s ease;
+    }
+
+    .footer-links a:hover::before {
+        opacity: 1;
+    }
+
+    .footer-links a:hover {
+        color: #F5DEB3;
+        transform: translateX(10px);
+    }
+
+    .footer-contact {
+        display: flex;
+        align-items: center;
+        margin-bottom: 12px;
+        color: #E8D5B7;
+    }
+
+    .footer-contact-icon {
+        margin-right: 12px;
+        font-size: 1.1rem;
+    }
+
+    .footer-social {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .footer-social a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 45px;
+        height: 45px;
+        background: rgba(245, 222, 179, 0.1);
+        border-radius: 50%;
+        color: #F5DEB3;
+        text-decoration: none;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+        border: 2px solid rgba(245, 222, 179, 0.2);
+    }
+
+    .footer-social a:hover {
+        background: linear-gradient(45deg, #FFE0B2, #F5DEB3);
+        color: #3E2723;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(255, 224, 178, 0.3);
+    }
+
+    .footer-newsletter {
+        background: rgba(255, 248, 225, 0.1);
+        padding: 25px;
+        border-radius: 15px;
+        border: 1px solid rgba(245, 222, 179, 0.2);
+    }
+
+    .footer-newsletter h4 {
+        color: #F5DEB3;
+        margin-bottom: 15px;
+        font-size: 1.1rem;
+    }
+
+    .footer-newsletter p {
+        color: #E8D5B7;
+        font-size: 0.95rem;
+        margin-bottom: 20px;
+    }
+
+    .newsletter-form {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .newsletter-input {
+        flex: 1;
+        min-width: 200px;
+        padding: 12px 15px;
+        border: 2px solid rgba(245, 222, 179, 0.3);
+        border-radius: 25px;
+        background: rgba(255, 248, 225, 0.1);
+        color: #FFF8E1;
+        font-size: 0.95rem;
+    }
+
+    .newsletter-input::placeholder {
+        color: rgba(232, 213, 183, 0.7);
+    }
+
+    .newsletter-input:focus {
+        outline: none;
+        border-color: #F5DEB3;
+        background: rgba(255, 248, 225, 0.15);
+    }
+
+    .newsletter-btn {
+        padding: 12px 25px;
+        background: linear-gradient(45deg, #FFE0B2, #F5DEB3);
+        color: #3E2723;
+        border: none;
+        border-radius: 25px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .newsletter-btn:hover {
+        background: linear-gradient(45deg, #FFCC80, #FFE0B2);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 224, 178, 0.3);
+    }
+
+    .footer-bottom {
+        margin-top: 50px;
+        padding-top: 30px;
+        border-top: 1px solid rgba(245, 222, 179, 0.2);
+        text-align: center;
+        color: #E8D5B7;
+    }
+
+    .footer-bottom p {
+        margin-bottom: 10px;
+    }
+
+    .footer-bottom-links 
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-top: 15px;
+    }
+
+    .footer-bottom-links a {
+        color: #E8D5B7;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: color 0.3s ease;
+    }
+
+    .footer-bottom-links a:hover {
+        color: #F5DEB3;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .hero-container {
+            grid-template-columns: 1fr;
+            gap: 40px;
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-size: 2.5rem;
+        }
+
+        .hero-content p {
+            font-size: 1.1rem;
+        }
+
+        .hero-buttons {
+            justify-content: center;
+        }
+
+        .hero-pet-image {
+            height: 300px;
+            font-size: 6rem;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+        }
+
+        .cta-title {
+            font-size: 2.2rem;
+        }
+
+        .features-grid {
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .hero-content h1 {
+            font-size: 2rem;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            font-size: 1rem;
+        }
+
+        .hero-pet-image {
+            height: 250px;
+            font-size: 4rem;
+        }
+
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .footer-container {
+            grid-template-columns: 1fr;
+            gap: 30px;
+            text-align: center;
+        }
+
+        .newsletter-form {
+            flex-direction: column;
+        }
+
+        .newsletter-input {
+            min-width: 100%;
+        }
+
+        .footer-bottom-links {
+            flex-direction: column;
+            gap: 10px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>Everything Your <span class="highlight">Pet Needs</span><br>in One Place</h1>
+                <p>From nutritious food to cozy accessories, we provide high-quality, affordable essentials that make pet care simple and stress-free. Your pet's happiness is our priority.</p>
+                
+                <div class="hero-buttons">
+                    <a href="#" class="btn btn-primary">
+                        🛒 Shop Now
+                    </a>
+                    <a href="{{ path('app_about') }}" class="btn btn-secondary">
+                        📖 Learn More
+                    </a>
+                </div>
+            </div>
+            
+           <div class="hero-pet-image">
+    <img src="{{ asset('image/buddy.jpg') }}" alt="buddy">
+v      </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="features-container">
+            <h2 class="section-title">Why Choose The Pet Pantry?</h2>
+            <p class="section-subtitle">
+                We're committed to providing the best for your furry, feathered, and scaled family members
+            </p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">🍽️</span>
+                    <h3 class="feature-title">Premium Nutrition</h3>
+                    <p class="feature-description">Carefully selected nutritious food for dogs, cats, birds, and other pets to keep them healthy and energetic.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon">💰</span>
+                    <h3 class="feature-title">Affordable Quality</h3>
+                    <p class="feature-description">High-quality products at prices that won't break the bank. Great pet care shouldn't be expensive.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon">🏠</span>
+                    <h3 class="feature-title">Local Community</h3>
+                    <p class="feature-description">Supporting pet owners in our community with personalized service and expert advice you can trust.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon">✨</span>
+                    <h3 class="feature-title">Safe & Reliable</h3>
+                    <p class="feature-description">Every product is carefully vetted for safety and quality because your pet's wellbeing matters most to us.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="stats-container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number">1000+</span>
+                    <span class="stat-label">Happy Pets</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">500+</span>
+                    <span class="stat-label">Products Available</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">24/7</span>
+                    <span class="stat-label">Customer Support</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Quality Guarantee</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-container">
+            <h2 class="cta-title">Ready to Pamper Your Pet?</h2>
+            <p class="cta-subtitle">
+                Join thousands of pet owners who trust The Pet Pantry for all their pet care needs
+            </p>
+            <a href="#" class="cta-button">
+                Start Shopping Today 🐾
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="footer-container">
+            <!-- About Section -->
+            <div class="footer-section">
+                <h3>The Pet Pantry</h3>
+                <p>Your trusted partner in pet care excellence. We provide high-quality, affordable essentials for all your beloved pets - from dogs and cats to birds and beyond.</p>
+                
+                <div class="footer-social">
+                    <a href="#" title="Facebook">📘</a>
+                    <a href="#" title="Instagram">📷</a>
+                    <a href="#" title="Twitter">🐦</a>
+                    <a href="#" title="YouTube">📺</a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="{{ path('app_home') | default('/') }}">Home</a></li>
+                    <li><a href="{{ path('app_about') }}">About Us</a></li>
+                    <li><a href="#">Products</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- Pet Categories -->
+            <div class="footer-section">
+                <h3>Shop by Pet</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Dog Supplies</a></li>
+                    <li><a href="#">Cat Essentials</a></li>
+                    <li><a href="#">Bird Care</a></li>
+                    <li><a href="#">Small Pets</a></li>
+                    <li><a href="#">Pet Health</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="footer-section">
+                <h3>Get in Touch</h3>
+                
+                <div class="footer-contact">
+                    <span class="footer-contact-icon">📍</span>
+                    <span>123 Pet Street, Pet City, PC 12345</span>
+                </div>
+                
+                <div class="footer-contact">
+                    <span class="footer-contact-icon">📞</span>
+                    <span>(555) 123-PETS</span>
+                </div>
+                
+                <div class="footer-contact">
+                    <span class="footer-contact-icon">✉️</span>
+                    <span>hello@petpantry.com</span>
+                </div>
+                
+                <div class="footer-contact">
+                    <span class="footer-contact-icon">⏰</span>
+                    <span>Mon-Sat: 9AM-7PM</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Newsletter Section -->
+        <div class="footer-container" style="margin-top: 40px;">
+            <div class="footer-newsletter" style="grid-column: 1 / -1;">
+                <h4>🐾 Stay Updated with Pet Care Tips!</h4>
+                <p>Subscribe to our newsletter for exclusive deals, pet care advice, and new product announcements.</p>
+                <form class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
+                    <button type="submit" class="newsletter-btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            <p>&copy; {{ "now"|date("Y") }} The Pet Pantry. All rights reserved. Made with ❤️ for pets and their families.</p>
+            
+            <div class="footer-bottom-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Shipping Info</a>
+                <a href="#">Returns & Refunds</a>
+                <a href="#">FAQ</a>
+            </div>
+        </div>
+    </footer>
+{% endblock %}
